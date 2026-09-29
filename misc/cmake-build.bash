@@ -16,7 +16,7 @@ flags_fms="-I../FMS;-I$srcdir/FMS/include"
 # ocean
 paths_ocean=( "$srcdir/MOM6/"{config_src/infra/FMS2,config_src/memory/dynamic_nonsymmetric,config_src/drivers/FMS_cap,config_src/external/ODA_hooks,config_src/external/database_comms,config_src/external/stochastic_physics,config_src/external/MARBL,config_src/external/drifters,pkg/GSW-Fortran/{modules,toolbox}/,src/{*,*/*}/} "$srcdir/FMS/"{coupler,include} "$srcdir/"{ocean_BGC/generic_tracers,ocean_BGC/mocsy/src} )
 macros_ocean="MAX_FIELDS_=600;NOT_SET_AFFINITY;_USE_MOM6_DIAG;_USE_GENERIC_TRACER;USE_PRECISION=2"
-flags_ocean="-I../FMS;-I../mom6;-I$srcdir/MOM6/src/framework/"
+flags_ocean="-I../FMS;-I../mom6;-I$srcdir/MOM6/src/framework/;-I$srcdir/ocean_BGC/mocsy/src;-fdefault-double-8"
 # ice
 macros_ice='USE_FMS2_IO'
 paths_ice=( "$srcdir/SIS2/"{config_src/dynamic,config_src/external/Icepack_interfaces,src} "$srcdir/icebergs/src" "$srcdir/ice_param" )
@@ -32,7 +32,7 @@ flags_atmos="-I../FMS;-I$srcdir/FMS/include;-I$srcdir/GFDL_atmos_cubed_sphere/to
 # atmos phy
 paths_atmos_phys=( "$srcdir/atmos_phys" )
 macros_atmos_phys=""
-flags_atmos_phys="-I../FMS;-I$srcdir/FMS/include;-fdefault-double-8"
+flags_atmos_phys="-I../FMS;-I$srcdir/FMS/include;-fdefault-double-8;-I$srcdir/atmos_phys/atmos_param/cosp"
 
 # TODO, set build type according to mkmf template
 # build_type = "intel-prod"
@@ -41,7 +41,7 @@ flags_atmos_phys="-I../FMS;-I$srcdir/FMS/include;-fdefault-double-8"
 # cmake expects lists to be semicolon-separated
 IFS=";"
   
-cmake -S $srcdir/coupler \
+cmake -S $srcdir/FMScoupler \
   -DCOUPLER_TYPE="full" \
   -Dfms_paths="$paths_fms" \
   -Dfms_macros="$macros_fms" \
